@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>E:\GitHub\CourseNosov\sprite editor\</FILEPATH>
+      <FILENAME>App.h</FILENAME>
+      <LINE>59</LINE>
+      <COLUMN>0</COLUMN>
+    </SFA>
+    <DEFECTCODE>26495</DEFECTCODE>
+    <DESCRIPTION>Переменная "App::result" не инициализирована. Всегда инициализируйте переменную-член (type.6).</DESCRIPTION>
+    <FUNCTION>App::{ctor}</FUNCTION>
+    <DECORATED>??0App@@QAE@XZ</DECORATED>
+    <FUNCLINE>59</FUNCLINE>
+    <ADDITIONALINFO>
+      <targetSymbol>App::result</targetSymbol>
+    </ADDITIONALINFO>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

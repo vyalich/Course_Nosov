@@ -1,0 +1,6 @@
+﻿  App.cpp
+  Drawer.cpp
+  Компиляция...
+  Создание кода...
+  sprite editor.vcxproj -> E:\GitHub\CourseNosov\Debug\sprite editor.exe
+E:\GitHub\CourseNosov\sprite editor\App.h(59): warning C26495: Переменная "App::result" не инициализирована. Всегда инициализируйте переменную-член (type.6).
