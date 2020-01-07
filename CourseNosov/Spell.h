@@ -11,12 +11,12 @@ class Spell : public Dynamic{
 	private:
 		bool                    exist;
 		
+		int						Power;
 		double                  TarX;
 		double                  TarY;
 		static  int             Cost;
 		static Uint16           CoolDown;
 		static Uint16           Range;
-		static Uint16           Power;
 		static Uint32           LastUsed;;
 		static SDL_Texture* sprite_sheet;
 

@@ -24,8 +24,7 @@ public:
 	Being() {}
 	virtual ~Being() {}
 
-	virtual void Process() {}
 
-	virtual void Clear() {}
+	virtual void Clear() { Dynamic::Clear(); SDL_RemoveTimer(HPTimerID); }
 };
 

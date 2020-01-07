@@ -1,6 +1,7 @@
-﻿  Enemy.cpp
-E:\GitHub\CourseNosov\CourseNosov\Enemy.cpp(184,48): warning C4838:  преобразование из "double" в "int" требует сужающего преобразования
-E:\GitHub\CourseNosov\CourseNosov\Enemy.cpp(184,48): warning C4244:  инициализация: преобразование "double" в "int", возможна потеря данных
-E:\GitHub\CourseNosov\CourseNosov\Enemy.cpp(184,80): warning C4838:  преобразование из "double" в "int" требует сужающего преобразования
-E:\GitHub\CourseNosov\CourseNosov\Enemy.cpp(184,80): warning C4244:  инициализация: преобразование "double" в "int", возможна потеря данных
-  CourseNosov.vcxproj -> E:\GitHub\CourseNosov\Debug\CourseNosov.exe
+﻿  Player.cpp
+E:\GitHub\Course_Nosov\CourseNosov\Player.cpp(99,63): warning C4244:  аргумент: преобразование "double" в "int", возможна потеря данных
+E:\GitHub\Course_Nosov\CourseNosov\Player.cpp(99,40): warning C4244:  аргумент: преобразование "double" в "int", возможна потеря данных
+E:\GitHub\Course_Nosov\CourseNosov\Player.cpp(104,17): warning C4244:  *=: преобразование "double" в "int", возможна потеря данных
+E:\GitHub\Course_Nosov\CourseNosov\Player.cpp(105,17): warning C4244:  *=: преобразование "double" в "int", возможна потеря данных
+E:\GitHub\Course_Nosov\CourseNosov\Player.cpp(107,16): warning C4244:  *=: преобразование "double" в "int", возможна потеря данных
+  CourseNosov.vcxproj -> E:\GitHub\Course_Nosov\Debug\CourseNosov.exe

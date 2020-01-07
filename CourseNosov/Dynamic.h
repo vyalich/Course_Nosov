@@ -36,14 +36,12 @@ public:
 	Dynamic() {}
 	virtual ~Dynamic() {}
 
-	virtual void Process() {}
-
 	void Draw(SDL_Renderer* Render);
-
-	virtual void Clear() {}
 
 	void SetSpeed(double X, double Y);
 
 	void Stop();
+
+	virtual void Clear() { SDL_RemoveTimer(AnimTimerID); }
 };
 

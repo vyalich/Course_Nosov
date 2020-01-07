@@ -82,12 +82,9 @@ int Game::Init()
 	//Initialize renderer color
 	SDL_SetRenderDrawColor(Render, 0, 0, 0, 0xFF);
 
+	floor = 0;
+
 	srand(time(0));
-
-	enemy_cnt = 100;
-
-	//TODO: передвинуть в главный цикл, да и сам цикл переделать
-	LevelInit();
 
 	
 
@@ -97,10 +94,19 @@ int Game::Init()
 int Game::LevelInit()
 {
 	//инициализация карты
-	Map::MapControl.Load("map.dat");
+	Map::MapControl.Load();
 
-	//level = true;
-	
+
+	_level = true;
+
+	floor++;
+
+	enemy_cnt = 20 * floor;
+
+	Player::player.LevelInit();
+
+	Entity::OnScreen.push_back(&Player::player);
+	 
 	//инициализация врагов
 	Enemy* temp;
 	for (int i = 0; i < enemy_cnt; i++) {
@@ -112,10 +118,32 @@ int Game::LevelInit()
 	return 0;
 }
 
+void Game::LevelClear()
+{
+	Map::MapControl.ClearLevel();
+
+	Entity::OnScreen.clear();
+
+	for (int i = 0; i < enemy_cnt; i++)
+	{
+		Enemy::EnemyList[i]->Clear();
+		delete Enemy::EnemyList[i];
+	}
+	Enemy::EnemyList.clear();
+
+	for (auto spell : Spell::SpellCasted)
+	{
+		delete spell;
+	}
+
+	Spell::SpellCasted.clear();
+}
+
 
 //-------------------------
 void Game::Clear()
 {
+	Map::MapControl.Clear();
 	TTF_Quit();
 	SDL_Quit();
 }
@@ -127,19 +155,28 @@ int Game::MainCycle()
 	if (Init() < 0)
 		return -100;
 
-	MainCycleTimerID = SDL_AddTimer(1000 / 60, MainCycleTimerCallback, this);
+	
 
 	SDL_Event e;
 	
 	while (_running == GAME_RUNNING)
 	{
-		while (SDL_PollEvent(&e))
-		{
-			Handle(&e);
-		}
-	}
+		LevelInit();
 
-	SDL_RemoveTimer(MainCycleTimerID);
+		MainCycleTimerID = SDL_AddTimer(1000 / 60, MainCycleTimerCallback, this);
+
+		while (_level) {
+			while (SDL_PollEvent(&e))
+			{
+				Handle(&e);
+			}
+
+		}
+
+		SDL_RemoveTimer(MainCycleTimerID);
+
+		LevelClear();
+	}
 
 	Clear();
 }
@@ -150,8 +187,8 @@ Uint32 Game::MainCycleTimerCallback(Uint32 interval, void* data)
 {
 	Game* game_obj = static_cast<Game*>(data);
 
-	game_obj->Process();
-	game_obj->Draw();
+	if(game_obj->Process())
+		game_obj->Draw();
 
 	return interval;
 }
@@ -164,15 +201,13 @@ void Game::Handle(SDL_Event* e)
 	{
 	case SDL_QUIT:
 		_running = GAME_OVER;
+		_level = false;
 		break;
 
 	case SDL_KEYDOWN:
 		switch (e->key.keysym.sym)
 		{
-		case SDLK_UP:    Map::MapControl.MoveCam(0, -15); break;
-		case SDLK_DOWN:  Map::MapControl.MoveCam(0, 15); break;
-		case SDLK_LEFT:  Map::MapControl.MoveCam(-15, 0); break;
-		case SDLK_RIGHT: Map::MapControl.MoveCam(15, 0); break;
+		case SDLK_f:	_level = false; SDL_RemoveTimer(MainCycleTimerID);
 		}
 		break;
 
@@ -205,21 +240,28 @@ void Game::Handle(SDL_Event* e)
 
 
 //-------------------------
-void Game::Process()
+bool Game::Process()
 {
-	Player::player.Process();
+	if (!Player::player.Process())
+	{
+		_level = false;
+		if (!Player::player.Alive())
+			_running = GAME_OVER;
+		SDL_RemoveTimer(MainCycleTimerID);
+		return false;
+
+	}
 
 	double TarX = Player::player.GetX();
 	double TarY = Player::player.GetY();
 	int CamX = Map::MapControl.GetX();
 	int CamY = Map::MapControl.GetY();
 
-	Map::MapControl.Draw(Render);
+	//Map::MapControl.Draw(Render);
 
 	for (int i = 0; i < enemy_cnt; i++)
 		Enemy::EnemyList[i]->Process(TarX, TarY, CamX, CamY, Render);
 
-	//list<Spell*>::iterator spell;
 	for (auto spell = Spell::SpellCasted.begin(); spell != Spell::SpellCasted.end();)
 	{
 		(*spell)->Process();
@@ -233,15 +275,15 @@ void Game::Process()
 	}
 
 	Entity::OnScreen.sort(Compare);
+
+	return true;
 }
 
 
 //-------------------------
 void Game::Draw()
 {
-	//Map::MapControl.Draw(Render);
-
-	Player::player.Draw(Render);
+	Map::MapControl.Draw(Render);
 
 	for (auto entity : Entity::OnScreen) {
 		entity->Draw(Render);

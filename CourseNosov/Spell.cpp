@@ -4,7 +4,6 @@ std::list<Spell*>   Spell::SpellCasted;
 
 int                 Spell::Cost;
 Uint16              Spell::Range;
-Uint16              Spell::Power;
 Uint16              Spell::CoolDown;
 Uint32              Spell::LastUsed;
 SDL_Texture*		Spell::sprite_sheet;
@@ -12,6 +11,8 @@ SDL_Texture*		Spell::sprite_sheet;
 
 void Spell::Load() {
 	//_casted = false;
+
+	Power = 5 * (Player::player.intellect + 2);
 
 	exist = true;
 	col_t = 27;
@@ -36,7 +37,6 @@ int Spell::LoadStatic(SDL_Renderer* Render)
 {
 	Cost = 8;
 	Range = 10 * TILE_SIZE;
-	Power = 30;
 	CoolDown = 500;
 	LastUsed = 0;
 

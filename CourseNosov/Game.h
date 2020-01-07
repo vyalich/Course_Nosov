@@ -28,6 +28,8 @@ public:
 	
 	//освобождение памяти
 	void Clear();
+
+	void LevelClear();
 	
 	//главный цикл
 	int MainCycle();
@@ -36,7 +38,7 @@ public:
 	void Handle(SDL_Event* e);
 
 	//игровая логика
-	void Process();
+	bool Process();
 
 	//отрисовка
 	void Draw();
@@ -48,7 +50,8 @@ private:
 	SDL_Renderer*	Render;
 	SDL_TimerID		MainCycleTimerID;
 	int				_running;
-
+	bool			_level;
+	int				floor;
 	int				enemy_cnt;
 
 	bool			_lmb;	//левая кнопка мыши

@@ -10,12 +10,12 @@ Uint16 Enemy::FleeRNG;
 Uint16 Enemy::AttackRNG;
 
 void Enemy::Load() {
-	//on_screen = false;
+	onscreen = false;
 	state = BEING_IDLE;
 	w = 64;
 	h = 64;
 	AttackSPD = 1000;
-	AttackPWR = 1;
+	AttackPWR = 10;
 	LastAttack = 0;
 
 	hp_cur = 100;
@@ -25,8 +25,23 @@ void Enemy::Load() {
 	direction = rand() % 4;
 
 	dx = dy = 0;
-	last_x = x = (int)TILE_SIZE + rand() % ((int)MAP_W - 3) * (int)TILE_SIZE;
-	last_y = y = (int)TILE_SIZE + rand() % ((int)MAP_H - 3) * (int)TILE_SIZE;
+	
+	int id;
+
+	while (true)
+	{
+		id = 140 + rand() % 13580;
+		if (Map::MapControl.GetTileType(id) == TILE_FLOOR && Map::MapControl.GetTileType(id + 1) == TILE_FLOOR &&
+			Map::MapControl.GetTileType(id + MAP_W) == TILE_FLOOR && Map::MapControl.GetTileType(id + MAP_W + 1) == TILE_FLOOR)
+		{
+			x = id % MAP_W * TILE_SIZE;
+			y = id / MAP_W * TILE_SIZE;
+			break;
+		}
+	}
+
+	last_x = x; last_y = y;
+
 	w = h = 64;
 	speed = 2.5;
 
@@ -42,7 +57,7 @@ void Enemy::Load() {
 	last_frame[BEING_DEAD] = 64 * 5;
 
 	hp_cur = 100;
-	hp_regen = 3;
+	hp_regen = 5;
 	hp_max = 100;
 
 	HPTimerID = SDL_AddTimer(1000, HPTimerCallback, this);
@@ -180,9 +195,9 @@ void Enemy::LineOfSight(double PlayerX, double PlayerY, SDL_Renderer* Render) {
 	{
 
 		
-		SDL_SetRenderDrawColor(Render, 255, 0, 0, 255);
+		/*SDL_SetRenderDrawColor(Render, 255, 0, 0, 255);
 		SDL_Rect rect = { X - Map::MapControl.GetX() - 2, Y - Map::MapControl.GetY() - 2, 5, 5 };
-		SDL_RenderFillRect(Render, &rect);
+		SDL_RenderFillRect(Render, &rect);*/
 		
 		int ID = (int)X / TILE_SIZE + (int)Y / TILE_SIZE * MAP_W;
 		if (Map::MapControl.GetTileType(ID) == TILE_BLOCK) 
@@ -190,7 +205,8 @@ void Enemy::LineOfSight(double PlayerX, double PlayerY, SDL_Renderer* Render) {
 			return;
 		}
 	}
-	//state = BEING_CHASE;
+
+	state = BEING_CHASE;
 	last_x = x;
 	last_y = y;
 }

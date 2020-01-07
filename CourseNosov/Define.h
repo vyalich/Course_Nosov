@@ -40,7 +40,8 @@ enum DIRECTION
 enum TILE_TYPE
 {
 	TILE_FLOOR = 0,
-	TILE_BLOCK
+	TILE_BLOCK,
+	TILE_EXIT
 };
 
 enum FONTS
@@ -64,4 +65,12 @@ enum SPELL
 {
 	SPELL_CASTED = 1,
 	SPELL_DESTROY
+};
+
+enum MAP_CREATOR
+{
+	DEADTOP = 8,
+	DEADBOT = 4,
+	BIRTH = 4,
+	LOOPS = 8,
 };

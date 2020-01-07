@@ -27,13 +27,19 @@ public:
 	
 	Map() {}
 
-	void Load(const char* tilelist_path);
+	void Load();
+
+	bool MapCreatorCheck(bool* element, int _y, int _x);
+	
+	bool* MapCreate(bool* MapOld);
 
 	static int	LoadStatic(SDL_Renderer* Render, const char* tileset_path);
 
 	void Draw(SDL_Renderer* Render);
 
 	void Clear();
+
+	void ClearLevel() { TileList.clear(); }
 
 	void MoveCam(int dx, int dy);
 

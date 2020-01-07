@@ -18,6 +18,8 @@ protected:
 	int exp_cur;
 	int exp_max;
 
+	int intellect;
+
 	SDL_TimerID MPTimerID;
 
 	int level;
@@ -36,11 +38,17 @@ public:
 
 	static Player player;
 
+	bool Alive() { return onscreen; }
+
+	bool Move();
+
 	int Load(const char* path, SDL_Renderer* Render);
 
-	void Process();
+	void LevelInit();
 
-	void Clear();
+	bool Process();
+
+	void Clear() { Being::Clear(); SDL_RemoveTimer(MPTimerID); }
 
 	double GetX() { return x; }
 
