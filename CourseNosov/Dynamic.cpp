@@ -23,7 +23,7 @@ bool Dynamic::PosValidX()
 		ID = (int)(x - col_r + w) / TILE_SIZE + (int)(y + col_t) / TILE_SIZE * MAP_W;
 	}
 	for (int Y = (int)(y + col_t) / TILE_SIZE * TILE_SIZE; Y < y + h - col_b - 1; Y += TILE_SIZE) {
-		if (Map::MapControl.GetTileType(ID)) {
+		if (ID >= 0 && ID < 14000 && Map::MapControl.GetTileType(ID)) {
 			x = ID % MAP_W * TILE_SIZE;
 			if (dx < 0)
 				x += TILE_SIZE - col_l;
@@ -50,7 +50,7 @@ bool Dynamic::PosValidY()
 		ID = (int)(x + col_l) / TILE_SIZE + (int)(y + h) / TILE_SIZE * MAP_W;
 	}
 	for (int X = (int)(x + col_l) / TILE_SIZE * TILE_SIZE; X < x + w - col_r - 1; X += TILE_SIZE) {
-		if (Map::MapControl.GetTileType(ID)) {
+		if (ID >= 0 && ID < 14000 && Map::MapControl.GetTileType(ID)) {
 			y = ID / MAP_W * TILE_SIZE;
 			if (dy < 0)
 				y += TILE_SIZE - col_t;

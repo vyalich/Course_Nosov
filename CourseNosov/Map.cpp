@@ -166,6 +166,8 @@ void Map::Clear() {
 }
 
 int Map::GetTileType(int ID) {
+	/*if (ID < 0 || ID >= 14000)
+		return TILE_FLOOR;*/
 	return TileList[ID].Type;
 }
 

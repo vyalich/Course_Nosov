@@ -200,7 +200,7 @@ void Enemy::LineOfSight(double PlayerX, double PlayerY, SDL_Renderer* Render) {
 		SDL_RenderFillRect(Render, &rect);*/
 		
 		int ID = (int)X / TILE_SIZE + (int)Y / TILE_SIZE * MAP_W;
-		if (Map::MapControl.GetTileType(ID) == TILE_BLOCK) 
+		if (ID >= 0 && ID < 14000 && Map::MapControl.GetTileType(ID) == TILE_BLOCK) 
 		{
 			return;
 		}
